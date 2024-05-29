@@ -40,11 +40,52 @@ h1 {
 }
 
 .photographer_section article h2 {
-    color: #D3573C;
+    color: #d3573c;
+    text-align: center;
+    font-family: "DM Sans";
     font-size: 36px;
-}
-
-.photographer_section article img {
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: -5px;
+  }
+  
+  .photographer_section article img {
     height: 200px;
     width: 200px;
-}
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .photographer_section_city_country {
+    color: #901c1c;
+    text-align: center;
+    font-family: "DM Sans";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: -5px;
+  }
+  
+  .photographer_section_tagline {
+    color: #000;
+    text-align: center;
+    font-family: "DM Sans";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: -5px;
+  }
+  
+  .photographer_section_price {
+    color: #757575;
+    text-align: center;
+    font-family: "DM Sans";
+    font-size: 9px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  

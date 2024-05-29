@@ -1,3 +1,5 @@
+import photographerTemplate from '../templates/photographer.js';
+
 async function getPhotographers() {
   try {
     // Utilisation de fetch pour récupérer les données depuis le fichier JSON
