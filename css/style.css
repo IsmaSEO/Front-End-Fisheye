@@ -88,4 +88,10 @@ h1 {
     font-weight: 400;
     line-height: normal;
   }
+
+  /* Style pour le focus */
+    a:focus {
+    outline: 2px solid #901C1C;
+    outline-offset: 4px;
+}
   

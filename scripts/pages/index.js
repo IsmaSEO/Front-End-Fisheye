@@ -14,7 +14,7 @@ async function getPhotographers() {
     const data = await response.json();
 
     // Affichage des données dans la console pour vérification
-    console.log(data);
+    //console.log(data);
 
     // Retourne uniquement le tableau des photographes
     return data.photographers;
