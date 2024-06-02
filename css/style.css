@@ -65,7 +65,7 @@ h1 {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin-bottom: -5px;
+    margin-bottom: 0px;
   }
   
   .photographer_section_tagline {
@@ -79,7 +79,7 @@ h1 {
     margin-bottom: -5px;
   }
   
-  .photographer_section_price {
+  .photographer_section_price_index {
     color: #757575;
     text-align: center;
     font-family: "DM Sans";

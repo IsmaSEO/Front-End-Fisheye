@@ -1,13 +1,4 @@
-#contact_modal {
-    display: none;
-}
-
-.photograph-header {
-    background-color: #FAFAFA;
-    height: 300px;
-    margin: 0 100px;
-}
-
+/* Bouton de contact */
 .contact_button {
     font-size: 20px;
     font-weight: bold;
@@ -21,6 +12,105 @@
     cursor: pointer;
 }
 
+.contact_button:hover, .contact_button:focus {
+    background-color: #DB8876;
+    color: rgb(0, 0, 0);
+}
+
+/* Styles pour l'en-tête du photographe */
+.photograph-header {
+    background-color: #FAFAFA;
+    height: 300px;
+    width: 80%;
+    margin: 0 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 46px;
+}
+
+.photograph-header article {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 46px;
+}
+.photograph-header .info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.photograph-header .info h1 {
+    color: #D3573C;
+    font-family: "DM Sans";
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.photograph-header .contact {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.photograph-header .photo {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.photograph-header .photo img {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.photographer_section_price {
+    display: flex;
+    position: fixed;
+    align-items: center;
+    height: 89px;
+    width: 376px;
+    bottom: 0;
+    right: 40px;
+    padding-right: 15px;
+    background-color: #DB8876;
+    border-radius: 5px 5px 0 0;
+    color: #000;
+    text-align: center;
+    font-family: "DM Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    justify-content: flex-end;
+    
+}
+
+.photographer_section_city_country  {
+    margin: 2px 0 9px 0;
+    color: #901C1C;
+    font-family: "DM Sans";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.photographer_section_tagline   {
+    margin: 0;
+    color: #525252;
+    font-family: "DM Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+/* Styles pour la modale de contact */
 .modal {
     border-radius: 5px;
     background-color: #DB8876;
@@ -73,4 +163,29 @@ form input {
     height: 68px;
     border: none;
     border-radius: 5px;
+}
+
+/* Styles pour les médias */
+.media_section {
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 70px;
+    margin: 100px;
+}
+
+.media_section img, .media_section video {
+    width: 350px;
+    height: 300px;
+    border-radius: 5px;
+}
+
+.media_section h3 {
+    margin: 10px 0;
+    color: #901C1C;
+    font-size: 24px;
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
