@@ -1,26 +1,33 @@
-const mediaFactory = (media, photographerFolder) => {
-    const { title, image, video, likes } = media;
+const mediaFactory = (data, folder, index, openLightbox) => {
+  const { image, video, title, likes } = data;
 
-    const getMediaCardDOM = () => {
-        const article = document.createElement("article");
+  const getMediaCardDOM = () => {
+      const article = document.createElement("article");
 
-        const mediaElement = document.createElement(image ? 'img' : 'video');
-        mediaElement.src = image ? `../assets/photographers/Photos/${photographerFolder}/${image}` : `../assets/photographers/Photos/${photographerFolder}/${video}`;
-        mediaElement.alt = title;
-        if (video) {
-            mediaElement.controls = true;
-        }
+      const mediaElement = document.createElement(image ? "img" : "video");
+      mediaElement.src = `../assets/photographers/Photos/${folder}/${image || video}`;
+      mediaElement.alt = title;
+      mediaElement.tabIndex = 0;
+      mediaElement.setAttribute('aria-label', title);
+      mediaElement.onclick = () => openLightbox(index);
 
-        const titleElement = document.createElement("h3");
-        titleElement.textContent = title;
-        
-        article.appendChild(mediaElement);
-        article.appendChild(titleElement);
+      article.appendChild(mediaElement);
+      
+      const infoDiv = document.createElement("div");
+      infoDiv.classList.add("media-info");
 
-        return article;
-    };
+      const titleElement = document.createElement("h2");
+      titleElement.classList.add("media-title");
+      titleElement.textContent = title;
 
-    return { getMediaCardDOM };
+      infoDiv.appendChild(titleElement);
+
+      article.appendChild(infoDiv);
+
+      return article;
+  };
+
+  return { getMediaCardDOM };
 };
 
 export default mediaFactory;

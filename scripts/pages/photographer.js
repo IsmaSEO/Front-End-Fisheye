@@ -101,8 +101,8 @@ const displayMediaData = (media, photographerId) => {
     return;
   }
 
-  media.forEach((item) => {
-    const mediaModel = mediaFactory(item, photographerFolder);
+  media.forEach((item, index) => {
+    const mediaModel = mediaFactory(item, photographerFolder, index, lightbox.openLightbox);
     const mediaCardDOM = mediaModel.getMediaCardDOM();
     mediaSection.appendChild(mediaCardDOM);
   });
@@ -112,18 +112,20 @@ const displayMediaData = (media, photographerId) => {
 
 const init = async () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get("id");
+  const idUrl = urlParams.get("id");
 
-  if (!id) {
-    console.error("ID de photographe manquant dans l'URL");
+  if (!idUrl) {
+    console.error("ID du photographe manquant dans l'URL");
     return;
   }
 
-  const photographer = await getPhotographerById(id);
+  const photographer = await getPhotographerById(idUrl);
   displayPhotographerData(photographer);
-  displayPricePhotographer(photographer, id);
-  const media = await getMediaByPhotographerId(id);
-  displayMediaData(media, photographer.id);
+
+  const media = await getMediaByPhotographerId(idUrl);
+  displayMediaData(media, idUrl);
+
+  displayPricePhotographer(photographer, idUrl);
 };
 
 init();

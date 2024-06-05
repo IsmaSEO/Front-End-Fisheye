@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <link href="css/style.css" rel="stylesheet" type="text/css" />
   <link href="css/photographer.css" rel="stylesheet" type="text/css" />
@@ -10,41 +10,62 @@
 </head>
 <body>
   <header>
+    <a href="index.html">
     <img src="assets/images/logo.png" class="logo" alt="Fisheye Logo" />
+    </a>
   </header>
   <main id="main">
     <div class="photograph-header">
       <div class="info">
-        <!-- Les données du photographe sont ajoutées ici par JS -->
+        <!-- Les données infos du photographe sont ajoutées ici par JS -->
       </div>
       <div class="contact">
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+        <button class="contact_button" onclick="displayModal()" aria-haspopup="dialog" aria-controls="contact_modal">Contactez-moi</button>
       </div>
       <div class="photo">
         <!-- La photo du photographe est ajoutée ici par JS -->
       </div>
     </div>
     <div class="photographer_section_price">
-    <!-- Le prix du photographe est ajouté ici par JS -->
+      <!-- Le prix du photographe est ajouté ici par JS -->
     </div>
     <div class="media_section"></div>
   </main>
-  <div id="contact_modal">
-    <div class="modal">
-      <header>
-        <h2>Contactez-moi</h2>
-        <img src="assets/icons/close.svg" onclick="closeModal()" />
-      </header>
-      <form>
-        <div>
-          <label>Prénom</label>
-        </div>
-      </form>
+
+  <!-- Modale de contact -->
+<div id="contact_modal" class="modal" role="dialog" aria-labelledby="contact_modal_label" aria-hidden="true">
+  <div class="modal_content">
+    <div class="modal_header">
+      <h2 id="contact_modal_label">Contactez-moi</h2>
+      <button id="close_modal" aria-label="Fermer la fenêtre" onclick="closeModal()">
+        <img id="close_modal_cross" src="/assets/icons/close.svg" alt="Fermer">
+      </button>
     </div>
+    <!-- Modale formulaire -->
+    <form id="contact_form">
+      <div class="modal_body">
+        <label for="first_name">Prénom</label>
+        <input type="text" id="first_name" name="first_name" aria-required="true" aria-label="Remplir votre prénom" required>
+
+        <label for="last_name">Nom</label>
+        <input type="text" id="last_name" name="last_name" aria-required="true" aria-label="Remplir votre nom" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" aria-required="true" aria-label="Remplir votre email" required>
+
+        <label for="message">Votre message</label>
+        <textarea id="message" name="message" aria-required="true" aria-label="Remplir votre message" required></textarea>
+      </div>
+      <div class="modal_footer">
+        <button type="submit">Envoyer</button>
+      </div>
+    </form>
   </div>
+</div>
+
   <script type="module" src="/scripts/pages/photographer.js"></script>
   <script type="module" src="/scripts/templates/media.js"></script>
   <script type="module" src="/scripts/templates/photographerPriceFactory.js"></script>
-  <script type="module" src="/scripts/utils/contactForm.js"></script>
+  <script src="/scripts/utils/contactForm.js"></script>
 </body>
 </html>
