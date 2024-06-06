@@ -2,6 +2,7 @@
 import photographerTemplate from "../templates/photographer.js";
 import mediaFactory from "../templates/media.js";
 import photographerPriceFactory from "../templates/photographerPriceFactory.js";
+import lightboxFactory from '../utils/lightboxFactory.js';
 
 const photographerFolderMap = {
   930: "Ellie Rose",
@@ -101,31 +102,37 @@ const displayMediaData = (media, photographerId) => {
     return;
   }
 
+
+  const lightbox = lightboxFactory();
+  lightbox.initLightbox(media, photographerFolder);
+  lightbox.addMediaEventListeners();
+  
   media.forEach((item, index) => {
     const mediaModel = mediaFactory(item, photographerFolder, index, lightbox.openLightbox);
     const mediaCardDOM = mediaModel.getMediaCardDOM();
     mediaSection.appendChild(mediaCardDOM);
   });
-
+  
   console.log("Médias affichés:", media);
-};
-
-const init = async () => {
+  };
+  
+  const init = async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const idUrl = urlParams.get("id");
-
+  
   if (!idUrl) {
     console.error("ID du photographe manquant dans l'URL");
     return;
   }
-
+  
   const photographer = await getPhotographerById(idUrl);
   displayPhotographerData(photographer);
-
+  
   const media = await getMediaByPhotographerId(idUrl);
   displayMediaData(media, idUrl);
-
+  
   displayPricePhotographer(photographer, idUrl);
-};
-
-init();
+  };
+  
+  init();
+  
