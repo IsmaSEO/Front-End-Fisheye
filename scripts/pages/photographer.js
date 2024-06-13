@@ -1,6 +1,6 @@
 //Code JS lié à la page photographer.html
 import photographerTemplate from "../templates/photographer.js";
-import mediaFactory from "../templates/media.js";
+import { mediaFactory, initializeTotalLikes } from "../templates/media.js";
 import photographerPriceFactory from "../templates/photographerPriceFactory.js";
 import lightboxFactory from '../utils/lightboxFactory.js';
 
@@ -78,13 +78,11 @@ const displayPhotographerData = (photographer) => {
   console.log("Données du photographe affichées:", photographer);
 };
 
+// Remplis la section prix du photographe
 const displayPricePhotographer = (photographer, idUrl) => {
   const priceSection = document.querySelector(".photographer_section_price");
   const photographerFactory = photographerPriceFactory(photographer);
-  const priceElement = photographerFactory.getPhotographerPriceDOM(
-    parseInt(idUrl)
-  );
-  console.log("Élément de prix:", priceElement);
+  const priceElement = photographerFactory.getPhotographerPriceDOM(parseInt(idUrl));
   if (priceElement) {
     priceSection.appendChild(priceElement);
   }
@@ -106,33 +104,33 @@ const displayMediaData = (media, photographerId) => {
   const lightbox = lightboxFactory();
   lightbox.initLightbox(media, photographerFolder);
   lightbox.addMediaEventListeners();
-  
+
   media.forEach((item, index) => {
     const mediaModel = mediaFactory(item, photographerFolder, index, lightbox.openLightbox);
     const mediaCardDOM = mediaModel.getMediaCardDOM();
     mediaSection.appendChild(mediaCardDOM);
   });
-  
+
   console.log("Médias affichés:", media);
-  };
-  
-  const init = async () => {
+  initializeTotalLikes(media);
+};
+
+const init = async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const idUrl = urlParams.get("id");
-  
+
   if (!idUrl) {
     console.error("ID du photographe manquant dans l'URL");
     return;
   }
-  
+
   const photographer = await getPhotographerById(idUrl);
   displayPhotographerData(photographer);
-  
+
   const media = await getMediaByPhotographerId(idUrl);
   displayMediaData(media, idUrl);
-  
+
   displayPricePhotographer(photographer, idUrl);
-  };
-  
-  init();
-  
+};
+
+init();

@@ -234,6 +234,53 @@ form textarea {
     align-items: center;
     width: 100%;
   }
+
+.media-likes-container {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    color: #901C1C;
+    gap: 5px;
+  }
+  
+.media-likes {
+    margin: 0;
+    padding: 0;
+  }
+  
+.like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+  }
+  
+.like-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 30px;
+  }
+  
+.like-button:focus {
+    outline: 2px solid #901C1C;
+    outline-offset: 4px;
+  }
+
+.total-likes-container {
+    margin-right: 5em;
+    display: flex;
+    align-items: center;
+}
+
+  .total-likes {
+    margin-right: 10px;
+  }
+  
+  .total-likes-icon {
+    width: 20px;
+    height: 20px;
+  }
   
 /* Styles pour la lightbox */
   .lightbox {
