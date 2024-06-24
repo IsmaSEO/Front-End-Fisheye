@@ -13,11 +13,14 @@ function initializeTotalLikes(media) {
 }
 
 const mediaFactory = (data, folder, index, openLightbox) => {
-  const { image, video, title, likes } = data;
+  const { image, video, title, likes, date } = data;
   let userLiked = false;
 
   const getMediaCardDOM = () => {
     const article = document.createElement("article");
+    article.dataset.title = title.toLowerCase();
+    article.dataset.likes = likes;
+    article.dataset.date = date; 
 
     const mediaElement = document.createElement(image ? "img" : "video");
     mediaElement.src = `../assets/photographers/Photos/${folder}/${image || video}`;

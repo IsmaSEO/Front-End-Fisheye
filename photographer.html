@@ -11,7 +11,7 @@
 <body>
   <header>
     <a href="index.html">
-    <img src="assets/images/logo.png" class="logo" alt="Fisheye Logo" />
+      <img src="assets/images/logo.png" class="logo" alt="Fisheye Logo" />
     </a>
   </header>
   <main id="main">
@@ -20,74 +20,95 @@
         <!-- Les données infos du photographe sont ajoutées ici par JS -->
       </div>
       <div class="contact">
-        <button class="contact_button" onclick="displayModal()" aria-haspopup="dialog" aria-controls="contact_modal">Contactez-moi</button>
+        <button class="contact_button" id="contactButton" aria-haspopup="dialog" aria-controls="contact_modal">Contactez-moi</button>
       </div>
       <div class="photo">
         <!-- La photo du photographe est ajoutée ici par JS -->
       </div>
     </div>
+
+     <!-- Section filtres du systeme de tri-->
+     <section class="sort-section">
+      <span id="sort-options">Trier par</span>
+      <div class="custom-listbox" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+        <ul class="listbox" role="listbox">
+          <li class="listbox-option" role="option" aria-selected="true" tabindex="0">
+            <input class="listbox-input" type="radio" name="customselect" id="customselect-popularity" value="popularity" checked="">
+            <label class="listbox-label" for="customselect-popularity">Popularité</label>
+            <img class="listbox-toggle" src="assets/icons/arrow_down_filter.svg" alt="Flèche vers le bas">
+          </li>
+          <li class="listbox-items" role="presentation">
+            <ul class="listbox-options" id="listbox-options">
+              <li class="listbox-option" role="option" aria-selected="true" tabindex="0">
+                <input class="listbox-input" type="radio" name="customselect" id="customselect-date" value="date">
+                <label class="listbox-item" for="customselect-date">Date</label>
+              </li>
+              <li class="listbox-option" role="option"  aria-selected="true" tabindex="0">
+                <input class="listbox-input" type="radio" name="customselect" id="customselect-title" value="title">
+                <label class="listbox-item" for="customselect-title">Titre</label>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>         
+  </section>
+
     <div class="media_section"></div>
     <div class="photographer_section_price">
      <!-- Le prix et le nombre total de likes du photographe est ajouté ici par JS -->
-     <div class="total-likes-container">
-      <span id="total_likes" class="total-likes">0</span>
-      <img src="/assets/icons/heart_black_media.svg" alt="total likes icon" class="total-likes-icon">
-    </div>
-    
-  </div>    
-</main> 
+      <div class="total-likes-container">
+        <span id="total_likes" class="total-likes">0</span>
+        <img src="/assets/icons/heart_black_media.svg" alt="total likes icon" class="total-likes-icon">
+      </div>
+    </div>    
+  </main> 
   <!-- Modale de contact -->
-<div id="contact_modal" class="modal" role="dialog" aria-labelledby="contact_modal_label" aria-hidden="true">
-  <div class="modal_content">
-    <div class="modal_header">
-      <h2 id="contact_modal_label">Contactez-moi</h2>
-      <button id="close_modal" aria-label="Fermer la fenêtre" onclick="closeModal()">
-        <img id="close_modal_cross" src="/assets/icons/close.svg" alt="Fermer">
-      </button>
+  <div id="contact_modal" class="modal" role="dialog" aria-labelledby="contact_modal_label" aria-hidden="true">
+    <div class="modal_content">
+      <div class="modal_header">
+        <h2 id="contact_modal_label">Contactez-moi</h2>
+        <button id="close_modal" aria-label="Fermer la fenêtre">
+          <img id="close_modal_cross" src="/assets/icons/close.svg" alt="Fermer">
+        </button>
+      </div>
+      <!-- Modale formulaire -->
+      <form id="contact_form">
+        <div class="modal_body">
+          <label for="first_name">Prénom</label>
+          <input type="text" id="first_name" name="first_name" aria-required="true" aria-label="Remplir votre prénom" required>
+          <label for="last_name">Nom</label>
+          <input type="text" id="last_name" name="last_name" aria-required="true" aria-label="Remplir votre nom" required>
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" aria-required="true" aria-label="Remplir votre email" required>
+          <label for="message">Votre message</label>
+          <textarea id="message" name="message" aria-required="true" aria-label="Remplir votre message" required></textarea>
+        </div>
+        <div class="modal_footer">
+          <button type="submit">Envoyer</button>
+        </div>
+      </form>
     </div>
-    <!-- Modale formulaire -->
-    <form id="contact_form">
-      <div class="modal_body">
-        <label for="first_name">Prénom</label>
-        <input type="text" id="first_name" name="first_name" aria-required="true" aria-label="Remplir votre prénom" required>
-
-        <label for="last_name">Nom</label>
-        <input type="text" id="last_name" name="last_name" aria-required="true" aria-label="Remplir votre nom" required>
-
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" aria-required="true" aria-label="Remplir votre email" required>
-
-        <label for="message">Votre message</label>
-        <textarea id="message" name="message" aria-required="true" aria-label="Remplir votre message" required></textarea>
-      </div>
-      <div class="modal_footer">
-        <button type="submit">Envoyer</button>
-      </div>
-    </form>
   </div>
-</div>
-
-<!-- Modale lightbox -->
-<div id="lightbox_modal" class="lightbox" aria-hidden="true" role="dialog" aria-labelledby="lightbox_title">
-  <div class="lightbox_content">
-    <button id="close_lightbox" class="close_lightbox" aria-label="Fermer la fenêtre" onclick="closeLightbox()">
-      <img id="close_lightbox_cross" src="/assets/icons/close_cross_lightbox.svg" alt="Fermer la fenêtre">
-    </button>
-    <button id="prevMedia" class="prev_lightbox" aria-label="Image précédente">
-      <img id="prev_lightbox_arrow" src="/assets/icons/prev_arrow_lightbox.svg" alt="Voir l'image précédente">
-    </button>
-    <button id="nextMedia" class="next_lightbox" aria-label="Image suivante">
-      <img id="next_lightbox_arrow" src="/assets/icons/next_arrow_lightbox.svg" alt="Voir l'image suivante">
-    </button>
-    <div class="lightbox_media" id="lightbox_media" role="document"></div>
-    <div class="lightbox_title" id="lightbox_title"></div>
+  <!-- Modale lightbox -->
+  <div id="lightbox_modal" class="lightbox" aria-hidden="true" role="dialog" aria-labelledby="lightbox_title">
+    <div class="lightbox_content">
+      <button id="close_lightbox" class="close_lightbox" aria-label="Fermer la fenêtre">
+        <img id="close_lightbox_cross" src="/assets/icons/close_cross_lightbox.svg" alt="Fermer la fenêtre">
+      </button>
+      <button id="prevMedia" class="prev_lightbox" aria-label="Image précédente">
+        <img id="prev_lightbox_arrow" src="/assets/icons/prev_arrow_lightbox.svg" alt="Voir l'image précédente">
+      </button>
+      <button id="nextMedia" class="next_lightbox" aria-label="Image suivante">
+        <img id="next_lightbox_arrow" src="/assets/icons/next_arrow_lightbox.svg" alt="Voir l'image suivante">
+      </button>
+      <div class="lightbox_media" id="lightbox_media" role="document"></div>
+      <div class="lightbox_title" id="lightbox_title"></div>
+    </div>
   </div>
-</div>
-
   <script type="module" src="/scripts/pages/photographer.js"></script>
   <script type="module" src="/scripts/templates/media.js"></script>
   <script type="module" src="/scripts/templates/photographerPriceFactory.js"></script>
   <script type="module" src="/scripts/utils/lightboxFactory.js"></script>
-  <script src="/scripts/utils/contactForm.js"></script>
+  <script type="module" src="/scripts/utils/contactForm.js"></script>
 </body>
 </html>

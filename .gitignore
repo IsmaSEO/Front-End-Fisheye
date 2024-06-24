@@ -1,0 +1,24 @@
+# Node modules
+node_modules/
+
+# ESLint cache file
+.eslintcache
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Optional eslint configuration override directory
+.eslint-config/

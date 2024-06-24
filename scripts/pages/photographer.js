@@ -1,8 +1,7 @@
 //Code JS lié à la page photographer.html
-import photographerTemplate from "../templates/photographer.js";
 import { mediaFactory, initializeTotalLikes } from "../templates/media.js";
 import photographerPriceFactory from "../templates/photographerPriceFactory.js";
-import lightboxFactory from '../utils/lightboxFactory.js';
+import lightboxFactory from "../utils/lightboxFactory.js";
 
 const photographerFolderMap = {
   930: "Ellie Rose",
@@ -64,9 +63,7 @@ const displayPhotographerData = (photographer) => {
   taglineElement.className = "photographer_section_tagline";
   taglineElement.textContent = photographer.tagline;
 
-  infoSection.appendChild(nameElement);
-  infoSection.appendChild(cityCountryElement);
-  infoSection.appendChild(taglineElement);
+  infoSection.append(nameElement, cityCountryElement, taglineElement);
 
   // Remplis la section photo
   const photoElement = document.createElement("img");
@@ -82,7 +79,9 @@ const displayPhotographerData = (photographer) => {
 const displayPricePhotographer = (photographer, idUrl) => {
   const priceSection = document.querySelector(".photographer_section_price");
   const photographerFactory = photographerPriceFactory(photographer);
-  const priceElement = photographerFactory.getPhotographerPriceDOM(parseInt(idUrl));
+  const priceElement = photographerFactory.getPhotographerPriceDOM(
+    parseInt(idUrl, 10)
+  );
   if (priceElement) {
     priceSection.appendChild(priceElement);
   }
@@ -100,13 +99,17 @@ const displayMediaData = (media, photographerId) => {
     return;
   }
 
-
   const lightbox = lightboxFactory();
   lightbox.initLightbox(media, photographerFolder);
   lightbox.addMediaEventListeners();
 
   media.forEach((item, index) => {
-    const mediaModel = mediaFactory(item, photographerFolder, index, lightbox.openLightbox);
+    const mediaModel = mediaFactory(
+      item,
+      photographerFolder,
+      index,
+      lightbox.openLightbox
+    );
     const mediaCardDOM = mediaModel.getMediaCardDOM();
     mediaSection.appendChild(mediaCardDOM);
   });
@@ -114,6 +117,109 @@ const displayMediaData = (media, photographerId) => {
   console.log("Médias affichés:", media);
   initializeTotalLikes(media);
 };
+
+// Fonction de tri des médias
+const sortMedia = (criteria) => {
+  const mediaSection = document.querySelector(".media_section");
+  if (!mediaSection) {
+    console.error("Section media pas trouvé dans le DOM");
+    return;
+  }
+
+  const mediaCards = Array.from(mediaSection.children);
+
+  let sortedMediaCards;
+  switch (criteria) {
+    case "date":
+      sortedMediaCards = mediaCards.sort(
+        (a, b) => new Date(b.dataset.date) - new Date(a.dataset.date)
+      );
+      break;
+    case "title":
+      sortedMediaCards = mediaCards.sort((a, b) =>
+        (a.dataset.title || "").localeCompare(b.dataset.title || "")
+      );
+      break;
+    case "popularity":
+    default:
+      sortedMediaCards = mediaCards.sort(
+        (a, b) => parseInt(b.dataset.likes, 10) - parseInt(a.dataset.likes, 10)
+      );
+      break;
+  }
+
+  // Mise à jour de l'ordre des médias dans le DOM
+  mediaSection.innerHTML = "";
+  sortedMediaCards.forEach((card) => mediaSection.appendChild(card));
+
+  console.log("Média triés par critères:", criteria);
+};
+
+// Initialisation et gestion du focus et de l'accessibilité
+// Assure l'accessibilité de la liste de tri
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleArrow = document.querySelector(".listbox-toggle");
+  const listBoxItems = document.querySelector(".listbox-items");
+  const options = document.querySelectorAll(".listbox-option input");
+
+  if (toggleArrow && listBoxItems) {
+    toggleArrow.addEventListener("click", () => {
+      const isExpanded = listBoxItems.classList.toggle("active");
+      toggleArrow.classList.toggle("open", isExpanded);
+      toggleArrow.setAttribute("aria-expanded", isExpanded);
+      console.log(
+        "Flèche cliquée pour voir les éléments de la zone de liste:",
+        listBoxItems.classList
+      );
+    });
+
+    toggleArrow.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        const isExpanded = listBoxItems.classList.toggle("active");
+        toggleArrow.classList.toggle("open", isExpanded);
+        toggleArrow.setAttribute("aria-expanded", isExpanded);
+      }
+    });
+  } else {
+    console.error(
+      "flèche ou éléments de zone de liste introuvable dans le DOM"
+    );
+  }
+
+  if (options) {
+    options.forEach((option) => {
+      option.addEventListener("change", () => {
+        listBoxItems.classList.remove("active");
+        toggleArrow.classList.remove("open");
+        toggleArrow.setAttribute("aria-expanded", "false");
+        console.log("Option modifiée, valeur sélectionnée:", option.value);
+        sortMedia(option.value);
+      });
+
+      option.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowDown") {
+          const nextOption =
+            option.parentElement.nextElementSibling?.querySelector("input");
+          if (nextOption) nextOption.focus();
+        } else if (event.key === "ArrowUp") {
+          const prevOption =
+            option.parentElement.previousElementSibling?.querySelector("input");
+          if (prevOption) prevOption.focus();
+        } else if (event.key === "Escape") {
+          listBoxItems.classList.remove("active");
+          toggleArrow.classList.remove("open");
+          toggleArrow.setAttribute("aria-expanded", "false");
+        }
+      });
+    });
+  } else {
+    console.error("Options pas trouvé dans le DOM");
+  }
+
+  // Tri initial par popularité
+  sortMedia("popularity");
+});
 
 const init = async () => {
   const urlParams = new URLSearchParams(window.location.search);
