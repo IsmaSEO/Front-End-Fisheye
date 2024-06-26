@@ -2,20 +2,29 @@ let lastFocusedElement;
 
 function displayModal() {
   const modal = document.getElementById("contact_modal");
+  const overlay = document.getElementById("overlay");
+
   lastFocusedElement = document.activeElement;
   modal.style.display = "block";
+  overlay.style.display = "block";
   modal.setAttribute('aria-hidden', 'false');
+
   const firstInput = modal.querySelector('input, textarea');
   if (firstInput) {
     firstInput.focus();
   }
+
   getNameModaleContact();
 }
 
 function closeModal() {
   const modal = document.getElementById("contact_modal");
+  const overlay = document.getElementById("overlay");
+
   modal.style.display = "none";
+  overlay.style.display = "none";
   modal.setAttribute('aria-hidden', 'true');
+
   if (lastFocusedElement) {
     lastFocusedElement.focus();
   }
@@ -67,8 +76,8 @@ function handleFormSubmit(event) {
 
 // Ferme la modale en cliquant à l'extérieur
 window.onclick = function(event) {
-  const modal = document.getElementById("contact_modal");
-  if (event.target === modal) {
+  const overlay = document.getElementById("overlay");
+  if (event.target === overlay) {
     closeModal();
   }
 };
