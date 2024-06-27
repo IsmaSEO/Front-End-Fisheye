@@ -28,16 +28,24 @@ async function displayData(photographers) {
   const photographersSection = document.querySelector(".photographer_section");
 
   photographers.forEach((photographer) => {
-    const photographerModel = photographerTemplate(photographer); // Utilisation du modèle de photographe
-    const userCardDOM = photographerModel.getUserCardDOM();
-    photographersSection.appendChild(userCardDOM);
+    try {
+      const photographerModel = photographerTemplate(photographer); // Utilisation du modèle factory de photographe
+      const userCardDOM = photographerModel.getPhotographerCardDOM(); // Utilisation de la méthode correcte
+      photographersSection.appendChild(userCardDOM);
+    } catch (error) {
+      console.error("Erreur lors de la création de la carte du photographe :", error);
+    }
   });
 }
 
 async function init() {
-  // Récupération des datas des photographes
-  const photographers = await getPhotographers();
-  displayData(photographers);
+  try {
+    // Récupération des datas des photographes
+    const photographers = await getPhotographers();
+    displayData(photographers);
+  } catch (error) {
+    console.error("Erreur lors de l'initialisation :", error);
+  }
 }
 
 init();

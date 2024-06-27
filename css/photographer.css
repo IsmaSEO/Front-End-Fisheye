@@ -21,7 +21,7 @@
 .photograph-header {
   background-color: #FAFAFA;
   height: 300px;
-  width: 80%;
+  width: 75%;
   margin: 0 100px;
   display: flex;
   align-items: center;
@@ -91,6 +91,7 @@
 
 .photographer_section_city_country  {
   margin: 2px 0 9px 0;
+  max-width: 130px;
   color: #901C1C;
   font-family: "DM Sans";
   font-size: 24px;

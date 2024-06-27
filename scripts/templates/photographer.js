@@ -1,6 +1,6 @@
 function photographerTemplate(photographer) {
   return {
-    getUserCardDOM: function () {
+    getPhotographerCardDOM: function () {
       // Création des éléments HTML pour la carte du photographe
       const { id, name, city, country, tagline, price, portrait } = photographer;
 
@@ -47,7 +47,51 @@ function photographerTemplate(photographer) {
       article.appendChild(priceElement);
 
       return article;
+    },
+
+    getPhotographerDOM: function() {
+      // Création des éléments HTML pour le header du photographe
+      const { name, city, country, tagline, price, portrait } = photographer;
+
+      const infoSection = document.createElement("div");
+      const photoSection = document.createElement("div");
+      const priceSection = document.createElement("div");
+
+      // Remplis la section infos
+      const nameElement = document.createElement("h1");
+      nameElement.textContent = name;
+
+      const cityCountryElement = document.createElement("p");
+      cityCountryElement.className = "photographer_section_city_country";
+      cityCountryElement.textContent = `${city}, ${country}`;
+
+      const taglineElement = document.createElement("p");
+      taglineElement.className = "photographer_section_tagline";
+      taglineElement.textContent = tagline;
+
+      infoSection.appendChild(nameElement);
+      infoSection.appendChild(cityCountryElement);
+      infoSection.appendChild(taglineElement);
+
+      // Remplis la section photo
+      const photoElement = document.createElement("img");
+      photoElement.src = `../assets/photographers/Photos/Photographers ID Photos/${portrait}`;
+      photoElement.alt = name;
+      photoSection.appendChild(photoElement);
+
+      // Remplis la section prix
+      const priceElement = document.createElement("p");
+      priceElement.className = "photographer_section_price";
+      priceElement.textContent = `${price}€/jour`;
+      priceSection.appendChild(priceElement);
+
+      return {
+        info: infoSection,
+        photo: photoSection,
+        price: priceSection
+      };
     }
   };
 }
+
 export default photographerTemplate;

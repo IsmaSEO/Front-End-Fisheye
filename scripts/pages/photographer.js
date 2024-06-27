@@ -1,8 +1,10 @@
 //Code JS lié à la page photographer.html
+import photographerTemplate from "../templates/photographer.js";
 import { mediaFactory, initializeTotalLikes } from "../templates/media.js";
 import photographerPriceFactory from "../templates/photographerPriceFactory.js";
 import lightboxFactory from "../utils/lightboxFactory.js";
 
+// Mapping des ID de photographes correspondant à leurs noms
 const photographerFolderMap = {
   930: "Ellie Rose",
   195: "Marcel",
@@ -12,6 +14,7 @@ const photographerFolderMap = {
   82: "Tracy",
 };
 
+// Fonction asynchrone pour récupérer un photographe par ID depuis le fichier JSON
 const getPhotographerById = async (id) => {
   try {
     const response = await fetch("/data/photographers.json");
@@ -27,6 +30,7 @@ const getPhotographerById = async (id) => {
   }
 };
 
+// Fonction asynchrone pour récupérer les médias par ID de photographe depuis le fichier JSON
 const getMediaByPhotographerId = async (id) => {
   try {
     const response = await fetch("/data/photographers.json");
@@ -42,51 +46,38 @@ const getMediaByPhotographerId = async (id) => {
   }
 };
 
+// Fonction pour afficher les données du photographe sur la page
 const displayPhotographerData = (photographer) => {
   if (!photographer) {
     console.error("Photographe non trouvé");
     return;
   }
 
+  const photographerTemplateInstance = photographerTemplate(photographer);
+  const { info, photo} = photographerTemplateInstance.getPhotographerDOM();
+
   const infoSection = document.querySelector(".photograph-header .info");
   const photoSection = document.querySelector(".photograph-header .photo");
 
-  // Remplis la section info
-  const nameElement = document.createElement("h1");
-  nameElement.textContent = photographer.name;
+  infoSection.innerHTML = "";
+  infoSection.appendChild(info);
 
-  const cityCountryElement = document.createElement("p");
-  cityCountryElement.className = "photographer_section_city_country";
-  cityCountryElement.textContent = `${photographer.city}, ${photographer.country}`;
-
-  const taglineElement = document.createElement("p");
-  taglineElement.className = "photographer_section_tagline";
-  taglineElement.textContent = photographer.tagline;
-
-  infoSection.append(nameElement, cityCountryElement, taglineElement);
-
-  // Remplis la section photo
-  const photoElement = document.createElement("img");
-  photoElement.src = `../assets/photographers/Photos/Photographers ID Photos/${photographer.portrait}`;
-  photoElement.alt = photographer.name;
-
-  photoSection.appendChild(photoElement);
+  photoSection.innerHTML = "";
+  photoSection.appendChild(photo);
 
   console.log("Données du photographe affichées:", photographer);
 };
 
-// Remplis la section prix du photographe
 const displayPricePhotographer = (photographer, idUrl) => {
   const priceSection = document.querySelector(".photographer_section_price");
-  const photographerFactory = photographerPriceFactory(photographer);
-  const priceElement = photographerFactory.getPhotographerPriceDOM(
-    parseInt(idUrl, 10)
-  );
+  const photographerPrice = photographerPriceFactory(photographer);
+  const priceElement = photographerPrice.getPhotographerPriceDOM(parseInt(idUrl, 10));
   if (priceElement) {
     priceSection.appendChild(priceElement);
   }
 };
 
+// Fonction pour afficher les données des médias sur la page
 const displayMediaData = (media, photographerId) => {
   const mediaSection = document.querySelector(".media_section");
 
@@ -221,6 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
   sortMedia("popularity");
 });
 
+
 const init = async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const idUrl = urlParams.get("id");
@@ -239,4 +231,4 @@ const init = async () => {
   displayPricePhotographer(photographer, idUrl);
 };
 
-init();
+init(); 
